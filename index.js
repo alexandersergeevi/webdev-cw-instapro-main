@@ -68,7 +68,7 @@ export const goToPage = (newPage, data) => {
 
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
-      console.log("Открываю страницу пользователя: ", data.userId);
+      console.log("Открываю страницу: ", data.userId);
       page = LOADING_PAGE;
       //posts = [];
       renderApp();
@@ -164,6 +164,7 @@ export function deletePost(id) {
   };
 };
 
+// Прошлый пример
 export function putLikes(id) {
   //if (user) {
   toggleLike(id, { token: getToken() })
