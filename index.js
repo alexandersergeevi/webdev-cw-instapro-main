@@ -9,6 +9,7 @@ import {
   USER_POSTS_PAGE,
 } from "./routes.js";
 import { renderPostsPageComponent } from "./components/posts-page-component.js";
+import { renderUserPostComponent } from "./components/user-page-component.js";
 import { renderLoadingPageComponent } from "./components/loading-page-component.js";
 import {
   getUserFromLocalStorage,
@@ -19,6 +20,7 @@ import {
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
+export let postsUser = [];
 
 const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
@@ -36,6 +38,19 @@ function getAPI() {
     .then((newPosts) => {
       page = POSTS_PAGE;
       posts = newPosts;
+      renderApp();
+    })
+    .catch((error) => {
+      console.error(error);
+      goToPage(POSTS_PAGE);
+    });
+}
+
+function getAPIuser(data) {
+  return fetchPostsUser(data.userId, { token: getToken() })
+    .then((newPosts) => {
+      page = USER_POSTS_PAGE;
+      postsUser = newPosts;
       renderApp();
     })
     .catch((error) => {
@@ -67,21 +82,10 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // TODO: реализовать получение постов юзера из API
-      console.log("Открываю страницу: ", data.userId);
+      console.log("Открываю страницу пользователя: ", data.userId);
       page = LOADING_PAGE;
-      //posts = [];
       renderApp();
-
-      return fetchPostsUser(data.userId, { token: getToken() })
-        .then((newPosts) => {
-          page = USER_POSTS_PAGE;
-          posts = newPosts;
-          renderApp();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      return getAPIuser(data);
     }
 
     page = newPage;
@@ -144,8 +148,7 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return renderPostsPageComponent({
+    return renderUserPostComponent({
       appEl,
     });
   }
@@ -164,29 +167,54 @@ export function deletePost(id) {
   };
 };
 
-// Прошлый пример
 export function putLikes(id) {
-  //if (user) {
+  if (page === USER_POSTS_PAGE) {
   toggleLike(id, { token: getToken() })
     .then(() => {
-      getAPI()
+      console.log('Ставим лайк - шаг 1')
+      getAPIuser(data)
+      console.log('Ставим лайк - шаг 2')
     })
     .catch((error) => {
       alert(error.message);
       goToPage(AUTH_PAGE);
     });
-  //};
+  } else {
+    toggleLike(id, { token: getToken() })
+    .then(() => {
+      console.log('Ставим лайк - шаг 1')
+      getAPI()
+      console.log('Ставим лайк - шаг 2')
+    })
+    .catch((error) => {
+      alert(error.message);
+      goToPage(AUTH_PAGE);
+    });
+  }
 };
 
 export function removeLikes(id) {
-  //if (user) {
+  if (page === USER_POSTS_PAGE) {
   dislikeLike(id, { token: getToken() })
     .then(() => {
-      getAPI()
+      console.log('Убираем лайк - шаг 1')
+      getAPIuser(data)
+      console.log('Убираем лайк - шаг 2')
     })
     .catch((error) => {
       alert(error.message);
       goToPage(AUTH_PAGE);
     });
-  //};
+  } else {
+    dislikeLike(id, { token: getToken() })
+    .then(() => {
+      console.log('Убираем лайк - шаг 1')
+      getAPI()
+      console.log('Убираем лайк - шаг 2')
+    })
+    .catch((error) => {
+      alert(error.message);
+      goToPage(AUTH_PAGE);
+    });
+  }
 };
