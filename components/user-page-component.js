@@ -75,7 +75,7 @@ export function renderUserPostComponent({ appEl }) {
         });
     }
 
-    function getLikePost() {
+    function getLikePost(data) {
 
         const likesButton = document.querySelectorAll('.like-button');
         for (const like of likesButton) {
@@ -85,9 +85,9 @@ export function renderUserPostComponent({ appEl }) {
                 const liked = like.dataset.liked;
 
                 if (liked == 'false') {
-                    putLikes(id);
+                    putLikes(id, data);
                 } else {
-                    removeLikes(id);
+                    removeLikes(id, data);
                 }
 
             })

@@ -167,7 +167,7 @@ export function deletePost(id) {
   };
 };
 
-export function putLikes(id) {
+export function putLikes(id, data) {
   if (page === USER_POSTS_PAGE) {
   toggleLike(id, { token: getToken() })
     .then(() => {
@@ -193,7 +193,7 @@ export function putLikes(id) {
   }
 };
 
-export function removeLikes(id) {
+export function removeLikes(id, data) {
   if (page === USER_POSTS_PAGE) {
   dislikeLike(id, { token: getToken() })
     .then(() => {
