@@ -176,7 +176,7 @@ export function putLikes(id) {
       console.log('Ставим лайк - шаг 2')
     })
     .catch((error) => {
-      alert(error.message);
+      console.error(error)
       goToPage(AUTH_PAGE);
     });
   } else {
@@ -187,7 +187,7 @@ export function putLikes(id) {
       console.log('Ставим лайк - шаг 2')
     })
     .catch((error) => {
-      alert(error.message);
+      console.error(error)
       goToPage(AUTH_PAGE);
     });
   }
@@ -202,7 +202,7 @@ export function removeLikes(id) {
       console.log('Убираем лайк - шаг 2')
     })
     .catch((error) => {
-      alert(error.message);
+      console.error(error)
       goToPage(AUTH_PAGE);
     });
   } else {
@@ -213,7 +213,7 @@ export function removeLikes(id) {
       console.log('Убираем лайк - шаг 2')
     })
     .catch((error) => {
-      alert(error.message);
+      console.error(error)
       goToPage(AUTH_PAGE);
     });
   }
