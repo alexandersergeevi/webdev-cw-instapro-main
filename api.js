@@ -119,7 +119,7 @@ export function fetchPostsUser( id , { token }) {
     });
 }
 
-export const toggleLike = (id, {token}) => {
+export const toggleLike = (id, { token }) => {
   return fetch(`${postsHost}/${id}/like`, {
     method: "POST",
     headers: {
