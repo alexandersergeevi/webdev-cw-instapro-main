@@ -5,7 +5,7 @@ import { deletePost, putLikes, removeLikes } from "../index.js"
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale"
 
-export function renderUserPostComponent({ appEl }) {
+export function renderUserPostComponent({ appEl, token, user }) {
 
     let userPostsHtml = postsUser.map((post) => {
         return `<li class="post">
@@ -75,7 +75,13 @@ export function renderUserPostComponent({ appEl }) {
         });
     }
 
-    function getLikePost(data) {
+    const page = USER_POSTS_PAGE;
+
+    let data = {
+        userId: postsUser[0]?.user.id
+      };
+
+    function getLikePost(token, page, data) {
 
         const likesButton = document.querySelectorAll('.like-button');
         for (const like of likesButton) {
@@ -93,6 +99,6 @@ export function renderUserPostComponent({ appEl }) {
             })
         }
     };
-    getLikePost();
+    getLikePost(token, page, data);
 
 }

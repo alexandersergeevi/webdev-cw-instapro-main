@@ -149,7 +149,7 @@ const renderApp = () => {
 
   if (page === USER_POSTS_PAGE) {
     return renderUserPostComponent({
-      appEl,
+      appEl, token: getToken(), user: getUserFromLocalStorage()
     });
   }
 };
@@ -161,7 +161,6 @@ export function deletePost(id) {
     deleteFetch({ token: getToken() }, id)
       .then((newPosts) => {
         posts = newPosts;
-        //return renderApp();
         getAPI();
       })
   };
@@ -171,9 +170,7 @@ export function putLikes(id, data) {
   if (page === USER_POSTS_PAGE) {
   toggleLike(id, { token: getToken() })
     .then(() => {
-      console.log('Ставим лайк - шаг 1')
       getAPIuser(data)
-      console.log('Ставим лайк - шаг 2')
     })
     .catch((error) => {
       console.error(error)
@@ -182,9 +179,7 @@ export function putLikes(id, data) {
   } else {
     toggleLike(id, { token: getToken() })
     .then(() => {
-      console.log('Ставим лайк - шаг 1')
       getAPI()
-      console.log('Ставим лайк - шаг 2')
     })
     .catch((error) => {
       console.error(error)
@@ -197,9 +192,7 @@ export function removeLikes(id, data) {
   if (page === USER_POSTS_PAGE) {
   dislikeLike(id, { token: getToken() })
     .then(() => {
-      console.log('Убираем лайк - шаг 1')
       getAPIuser(data)
-      console.log('Убираем лайк - шаг 2')
     })
     .catch((error) => {
       console.error(error)
@@ -208,9 +201,7 @@ export function removeLikes(id, data) {
   } else {
     dislikeLike(id, { token: getToken() })
     .then(() => {
-      console.log('Убираем лайк - шаг 1')
       getAPI()
-      console.log('Убираем лайк - шаг 2')
     })
     .catch((error) => {
       console.error(error)
